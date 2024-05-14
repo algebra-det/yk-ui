@@ -34,30 +34,22 @@
         </tr>
       </tbody>
     </table>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination pagination-sm justify-content-end">
-        <li :class="['page-item', { disabled: pagination.page === 1 }]">
-          <a @click="fetchCompanyList(pagination.page-1)" class="page-link"><span aria-hidden="true">&laquo;</span></a>
-        </li>
-        <li @click="fetchCompanyList(idx)" :key="idx" v-for="idx in pagination.totalPages" :class="['page-item', {active: pagination.page === idx}]"><a class="page-link">{{ idx }}</a></li>
-        <li
-          :class="[
-            'page-item',
-            { disabled: pagination.page === pagination.totalPages }
-          ]"
-        >
-          <a @click="fetchCompanyList(pagination.page+1)" class="page-link" href="#"
-            ><span aria-hidden="true">&raquo;</span></a
-          >
-        </li>
-      </ul>
-    </nav>
+    <pagination
+      :page="pagination.page"
+      :totalPages="pagination.totalPages"
+      @page-change="fetchCompanyList"
+    />
   </div>
 </template>
 
 <script>
+import Pagination from '../common/Pagination.vue'
+
 export default {
   name: 'client-List',
+  components: {
+    Pagination
+  },
   props: {
     searchKeyword: { type: String, default: '' }
   },
@@ -81,7 +73,7 @@ export default {
         )
       } else this.companies.push(data.data)
     },
-    async fetchCompanyList(page=1) {
+    async fetchCompanyList(page = 1) {
       try {
         this.pagination.page = page
         const { data } = await this.$http.get('/', {
@@ -106,7 +98,7 @@ export default {
     handleAction(company, action) {
       if (action === 'delete') this.deleteClient(company.id)
       else this.$emit('action', { company, action })
-    },
+    }
   },
   mounted() {
     this.fetchCompanyList()
@@ -118,12 +110,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.pagination > li {
-  cursor: pointer;
-}
-.page-link {
-  color: azure
-}
-</style>
