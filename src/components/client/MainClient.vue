@@ -1,36 +1,33 @@
 <template>
-  <div>
-    <component
-      v-bind:is="activeComponent"
-      :client-data="clientData"
-      @error="setErrors"
-    ></component>
-  </div>
+  <component
+    v-bind:is="activeComponent"
+    :client-data="clientData"
+    @error="setErrors"
+    @update="emitUpdate"
+  />
 </template>
 
 <script>
-import Create from './Create.vue'
-import Update from './Update.vue'
+import Form from './Create.vue'
 import Detail from './Detail.vue'
 
 const COMPONENT_MAP = {
-  create: Create,
-  update: Update,
+  create: Form,
+  update: Form,
   detail: Detail
 }
 
 export default {
-  name: 'client-List',
+  name: 'main-client',
   components: {
     Error,
-    Create,
-    Update,
+    Form,
     Detail
   },
   data() {
     return {
-      activeComponent: Create,
-      clientData: {},
+      activeComponent: Detail,
+      clientData: {}
     }
   },
   methods: {
@@ -38,9 +35,11 @@ export default {
       this.$emit('error', errors)
     },
     setComponentData(data) {
-      console.log('Data: ', data);
       this.activeComponent = COMPONENT_MAP[data.action]
       this.clientData = data.company
+    },
+    emitUpdate(data) {
+      this.$emit('update', data)
     }
   },
   mounted() {}

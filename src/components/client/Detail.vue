@@ -1,15 +1,16 @@
 <template>
-  <div>Detail</div>
+  <div>
+    <div>Detail</div>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'client-detail',
   props: {
-    msg: String
+    clientData: { type: Object, default: () => {} }
   }
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

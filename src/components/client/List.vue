@@ -50,6 +50,13 @@ export default {
     }
   },
   methods: {
+    updateList(data) {
+      if (data.update) {
+        this.companies = this.companies.map(q =>
+          data.data.id === q.id ? data.data : q
+        )
+      } else this.companies.push(data.data)
+    },
     async fetchCompanyList() {
       try {
         const { data } = await this.$http.get('/', {
@@ -57,6 +64,8 @@ export default {
         })
         this.companies = data.data.clients
         this.pagination.totalPages = data.data.totalPages
+        const [first] = this.companies
+        if (this.companies.length) this.handleAction(first, 'create')
       } catch (error) {
         console.log('Error: ', error)
       }
