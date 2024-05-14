@@ -123,4 +123,7 @@ export default {
 .pagination > li {
   cursor: pointer;
 }
+.page-link {
+  color: azure
+}
 </style>
