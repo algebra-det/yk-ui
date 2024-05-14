@@ -1,27 +1,55 @@
 <template>
-  <div id="app" class="container">
+  <div id="app" class="container m-5" data-bs-theme="dark">
     <div class="d-flex justify-content-around">
+      <error :errors="errors" />
       <div class="w-50">
-          <search class="mb-4" />
-        <div class="client-list">
-          <list></list>
+        <search-field class="mb-4" @change="handleSearch" />
+        <div>
+          <list
+            :search-keyword="searchKeyword"
+            @action="handleAction"
+            @error="setError"
+          />
         </div>
       </div>
-      <div class="w-50">Hello</div>
-      <!-- Content here -->
+      <div class="w-50">
+        <main-client ref="mainClient" @error="setError" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Error from './components/common/Error.vue'
 import List from './components/client/List'
-import Search from './components/client/Search'
+import SearchField from './components/common/SearchField.vue'
+import MainClient from './components/client/MainClient'
 
 export default {
   name: 'App',
   components: {
+    Error,
     List,
-    Search
+    SearchField,
+    MainClient
+  },
+  data() {
+    return {
+      rightComponent: 'create',
+      searchKeyword: '',
+      errors: []
+    }
+  },
+  methods: {
+    handleSearch(search) {
+      this.searchKeyword = search
+    },
+    handleAction(data) {
+      this.$refs.mainClient.setComponentData(data)
+    },
+    setError(errors) {
+      this.errors = errors
+    }
   }
 }
 </script>
