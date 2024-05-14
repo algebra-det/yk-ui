@@ -99,6 +99,6 @@ p {
   cursor: pointer;
 }
 .main-client {
-  min-width: 35%;
+  width: 35%;
 }
 </style>

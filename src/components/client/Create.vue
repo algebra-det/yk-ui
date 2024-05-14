@@ -78,11 +78,11 @@
       <div class="mb-2">
         <label for="pin-code">Pin Code</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="pin-code"
           placeholder="123456"
-          v-model="form.pin_code"
+          v-model.number="form.pin_code"
           required=""
         />
       </div>
@@ -90,11 +90,11 @@
       <div class="mb-2">
         <label for="authrised">Authorised Capital</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="authrised"
           placeholder="123"
-          v-model="form.authorised_capital"
+          v-model.number="form.authorised_capital"
           required=""
         />
       </div>
@@ -102,11 +102,11 @@
       <div class="mb-2">
         <label for="paid-up">Paid Up Capital</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="paid-up"
           placeholder="123"
-          v-model="form.paid_up_capital"
+          v-model.number="form.paid_up_capital"
           required=""
         />
       </div>
@@ -150,16 +150,17 @@ export default {
       e.preventDefault()
       try {
         const { data } = await this.$http.post(
-          `/${this.clientData.id || ''}`,
+          `/${this.clientData?.id || ''}`,
           this.form
         )
         this.$emit('update', { data: data.data.client, update: Boolean(this.clientData.id) })
+        this.$emit('error', [])
       } catch (error) {
         console.log('Error : ', error, error.response)
         if (error.response.status === 400)
           this.$emit(
             'error',
-            error.response?.data?.errors?.map(q => q.message)
+            error.response?.data?.errors || 'Something Went Wrong'
           )
       }
     },

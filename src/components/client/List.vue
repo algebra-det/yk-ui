@@ -65,7 +65,7 @@ export default {
         this.companies = data.data.clients
         this.pagination.totalPages = data.data.totalPages
         const [first] = this.companies
-        if (this.companies.length) this.handleAction(first, 'create')
+        if (this.companies.length) this.handleAction(first, 'detail')
       } catch (error) {
         console.log('Error: ', error)
       }

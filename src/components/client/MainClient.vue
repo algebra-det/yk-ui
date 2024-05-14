@@ -39,6 +39,7 @@ export default {
       this.clientData = data.company
     },
     emitUpdate(data) {
+      this.setComponentData({company: data.data, action: 'detail'})
       this.$emit('update', data)
     }
   },
