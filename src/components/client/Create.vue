@@ -153,15 +153,20 @@ export default {
           `/${this.clientData?.id || ''}`,
           this.form
         )
-        this.$emit('update', { data: data.data.client, update: Boolean(this.clientData.id) })
+        this.$emit('update', {
+          data: data.data.client,
+          update: Boolean(this.clientData.id)
+        })
         this.$emit('error', [])
       } catch (error) {
         console.log('Error : ', error, error.response)
-        if (error.response.status === 400)
-          this.$emit(
-            'error',
-            error.response?.data?.errors || 'Something Went Wrong'
-          )
+        if (error.response.data) {
+          const errorData = error.response?.data
+          let errors = errorData?.message
+          if (error.response.data.message === 'Validation Error')
+            errors = errorData.errors
+          this.$emit('error', errors)
+        }
       }
     },
     emptyForm() {
