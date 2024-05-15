@@ -1,5 +1,8 @@
 <template>
-  <div id="app" class="m-5" data-bs-theme="dark">
+  <div id="app" class="mx-5 my-2" data-bs-theme="dark">
+    <div class="d-flex justify-content-end mb-3">
+      <elastic-search-dropdown @action="handleAction" />
+    </div>
     <error :errors="errors" />
     <div class="d-flex justify-content-around gap-5">
       <div class="flex-grow-1">
@@ -26,7 +29,11 @@
         </div>
       </div>
       <div class="flex-shrink-1 main-client">
-        <main-client ref="mainClient" @error="setError" @update="handleUpdate" />
+        <main-client
+          ref="mainClient"
+          @error="setError"
+          @update="handleUpdate"
+        />
       </div>
     </div>
   </div>
@@ -36,6 +43,7 @@
 import Error from './components/common/Error.vue'
 import List from './components/client/List'
 import SearchField from './components/common/SearchField.vue'
+import ElasticSearchDropdown from './components/common/ElasticSearchDorpdown.vue'
 import MainClient from './components/client/MainClient'
 
 export default {
@@ -44,6 +52,7 @@ export default {
     Error,
     List,
     SearchField,
+    ElasticSearchDropdown,
     MainClient
   },
   data() {

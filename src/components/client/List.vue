@@ -77,7 +77,7 @@ export default {
       try {
         this.pagination.page = page
         const { data } = await this.$http.get('/', {
-          params: { ...this.pagination, q: this.searchKeyword }
+          params: { ...this.pagination, query: this.searchKeyword }
         })
         this.companies = data.data.clients
         this.pagination.totalPages = data.data.totalPages
