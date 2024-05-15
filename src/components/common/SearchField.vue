@@ -3,7 +3,7 @@
     <input
       class="form-control"
       type="text"
-      placeholder="Search"
+      :placeholder="placeholder"
       v-model="search"
       @keyup.enter="emitChange"
     />
@@ -16,6 +16,9 @@
 <script>
 export default {
   name: 'search-field',
+  props: {
+    placeholder: { type: String, default: 'Search' }
+  },
   data() {
     return {
       search: ''

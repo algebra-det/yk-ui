@@ -8,7 +8,7 @@
       <div class="flex-grow-1">
         <div class="row">
           <div class="col col-sm-11">
-            <search-field class="mb-4" @change="handleSearch" />
+            <search-field class="mb-4" placeholder="DB Search..." @change="handleSearch" />
           </div>
           <div class="col col-sm-1">
             <div
